@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Read {{ title }}{% endblock %}
+
+{% block body %}
+<h1>{{ title }}</h1>
+
+<div>
+    <p>something funny and longsomething funny and long something funny and longsomething funny and long/something funny and longpsomething funny and long>something funny and longsomething funny and longdsomething funny and longiv</p>
+    <p>something funny and longsomething funny and long something funny and longsomething funny and long/something funny and longpsomething funny and long>something funny and longsomething funny and longdsomething funny and longiv</p>
+    <p>something funny and longsomething funny and long something funny and longsomething funny and long/something funny and longpsomething funny and long>something funny and longsomething funny and longdsomething funny and longiv</p>
+</div>
+
+<h2>Comments ({{ comments | length }})</h2>
+
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
