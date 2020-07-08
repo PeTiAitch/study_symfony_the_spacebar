@@ -29,13 +29,17 @@ Sausage tenderloin officia jerky nostrud. Laborum elit pastrami non, pig kevin b
         
 Do mollit deserunt prosciutto laborum. Duis sint tongue quis nisi. Capicola qui beef ribs dolore pariatur. Minim strip steak fugiat nisi est, meatloaf pig aute. Swine rump turducken nulla sausage. Reprehenderit pork belly tongue alcatra, shoulder excepteur in beef bresaola duis ham bacon eiusmod. Doner drumstick short loin, adipisicing cow cillum tenderloin.
 EOF
-            )
-        ;
+);
 
         // publish most articles
         if (rand(1, 10) > 3) {
             $article->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1, 100))));
         }
+
+        $article->setAuthor('Mike Ferengi')
+            ->setHeartCount(rand(5, 100))
+            ->setImageFilename('asteroid.jpeg')
+            ;
 
         $em->persist($article);
         $em->flush();
