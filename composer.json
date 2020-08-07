@@ -8,6 +8,7 @@
         "knplabs/knp-markdown-bundle": "^1.8",
         "knplabs/knp-time-bundle": "^1.11",
         "sensio/framework-extra-bundle": "^5.5",
+        "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
@@ -18,6 +19,8 @@
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fzaninotto/faker": "^1.9",
         "sensiolabs/security-checker": "^6.0",
         "symfony/debug-bundle": "*",
         "symfony/maker-bundle": "^1.19",
@@ -68,7 +71,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.0.*"
         }
     }
