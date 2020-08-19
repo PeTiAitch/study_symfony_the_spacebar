@@ -49,20 +49,6 @@ EOF
             $article->setAuthor($this->faker->randomElement(self::$articleAuthors))
                     ->setHeartCount($this->faker->numberBetween(5, 100))
                     ->setImageFilename($this->faker->randomElement(self::$articleImages));
-
-            $comment = new Comment();
-            $comment->setAuthorName('Mike Ferengi')
-                    ->setContent('I ate a normal rock once. It did NOT taste like bacon!')
-                    ->setArticle($article)
-                    ;
-            $comment2 = new Comment();
-            $comment2->setAuthorName('Mike Ferengi')
-                ->setContent('Woohoo! I\'m going on an all-asteroid diet!')
-                ->setArticle($article)
-            ;
-
-            $manager->persist($comment);
-            $manager->persist($comment2);
         });
 
         $manager->flush();
