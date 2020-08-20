@@ -180,6 +180,29 @@ class Article
         return $this->comments;
     }
 
+    /**
+     * My way, but still queries for all commonts, the other is better
+     * @return \Generator|Comment[]
+     */
+    public function getNotDeletedComments(): \Generator
+    {
+        foreach($this->getComments() as $comment) {
+            if (!$comment->getIsDeleted()) {
+                yield $comment;
+            }
+        }
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getNonDeletedComments(): Collection
+    {
+        $criteria = ArticleRepository::createNonDeletedCriteria();
+
+        return $this->comments->matching($criteria);
+    }
+
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
