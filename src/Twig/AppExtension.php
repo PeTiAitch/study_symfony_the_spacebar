@@ -19,6 +19,7 @@ class AppExtension extends AbstractExtension
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
             new TwigFilter('cached_markdown', [AppRuntime::class, 'processMarkdown'], ['is_safe' => ['html']]),
+            new TwigFilter('trunkate', [$this, 'trunkate'])
         ];
     }
 
@@ -29,5 +30,20 @@ class AppExtension extends AbstractExtension
     //     ];
     // }
 
+    // This is from me, because the tutorial uses TwigExtension library and it's not supported any more
+    public function trunkate(string $text, int $maxLength = 30)
+    {
+        if (mb_strpos(trim($text), ' ') == false) {
+            return $text;
+        }
+
+        if (mb_strlen($text) <= $maxLength) {
+            return $text;
+        }
+
+        $text = mb_substr($text, 0, mb_strrpos(mb_substr($text, 0, $maxLength + 1), ' ')) . '...';
+
+        return $text;
+    }
     
 }
