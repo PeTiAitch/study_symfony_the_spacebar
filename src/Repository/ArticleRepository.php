@@ -33,10 +33,9 @@ class ArticleRepository extends ServiceEntityRepository
      */
     public function findAllPublishedOrderedByNewest()
     {
-        $this->createQueryBuilder('a')
-            ->addCriteria(self::createNonDeletedCriteria());
-
         return $this->addIsPublishedQueryBuilder()
+            ->leftJoin('a.tags', 't')
+            ->addSelect('t')
             ->orderBy('a.publishedAt', 'DESC')
             ->getQuery()
             ->getResult();
