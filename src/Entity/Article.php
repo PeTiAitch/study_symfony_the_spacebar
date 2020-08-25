@@ -187,7 +187,7 @@ class Article
     }
 
     /**
-     * My way, but still queries for all commonts, the other is better
+     * My way, but still queries for all comments, the other is better
      * @return \Generator|Comment[]
      */
     public function getNotDeletedComments(): \Generator
