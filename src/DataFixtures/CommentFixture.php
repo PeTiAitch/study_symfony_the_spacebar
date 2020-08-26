@@ -11,7 +11,7 @@ class CommentFixture extends BaseFixture implements DependentFixtureInterface
 {
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Comment::class, 100, function(Comment $comment, int $count) {
+        $this->createManyOld(Comment::class, 100, function(Comment $comment, int $count) {
             $comment->setContent(
                 $this->faker->boolean ? $this->faker->paragraph : $this->faker->sentences(2, true)
             )
