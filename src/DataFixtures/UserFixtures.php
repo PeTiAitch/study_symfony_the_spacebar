@@ -31,6 +31,9 @@ class UserFixtures extends BaseFixture
                 ))
             ;
 
+            if($this->faker->boolean) {
+                $user->setTwitterUsername($this->faker->userName);
+            }
             return $user;
         });
 
