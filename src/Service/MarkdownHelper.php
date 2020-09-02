@@ -5,6 +5,7 @@ namespace App\Service;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Component\Security\Core\Security;
 
 class MarkdownHelper 
 {
@@ -28,10 +29,16 @@ class MarkdownHelper
      */
     private $isDebug;
 
+    /**
+     * @var Security
+     */
+    private $security;
+
     public function __construct(AdapterInterface $cache, 
                                 MarkdownParserInterface $markdown, 
                                 LoggerInterface $markdownLogger, 
-                                bool $isDebug)
+                                bool $isDebug, 
+                                Security $security)
     {
         $this->cache = $cache;
 
@@ -40,12 +47,16 @@ class MarkdownHelper
         $this->logger = $markdownLogger;
 
         $this->isDebug = $isDebug;
+
+        $this->security = $security;
     }
 
     public function parse(string $source): string
     {
         if (stripos($source, 'bacon') !== false) {
-            $this->logger->info('They are talking about bacon again!');
+            $this->logger->info('They are talking about bacon again!', [
+                'user' => $this->security->getUser()
+            ]);
         }
 
         if($this->isDebug) {
