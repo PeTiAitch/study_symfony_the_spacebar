@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -19,6 +20,8 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Groups("main")
+     * 
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -29,6 +32,8 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Groups("main")
+     * 
      * @ORM\Column(type="string", length=255)
      */
     private $firstName;
@@ -39,6 +44,8 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Groups("main")
+     * 
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $twitterUsername;
