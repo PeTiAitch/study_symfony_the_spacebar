@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Repository\ApiTokenRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -11,24 +12,46 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
+    /**
+     * @var ApiTokenRepository
+     */
+    private $ApiTokenRepo;
+
+    public function __construct(ApiTokenRepository $apiTokenRepository)
+    {
+        $this->ApiTokenRepo = $apiTokenRepository;
+    }
+
+
     public function supports(Request $request)
     {
-        // todo
+        // look for header "Authorization: Bearer <token>"
+        return $request->headers->has('Authorization')
+                && 0 === strpos($request->headers->get('Authorization'), 'Bearer ');
     }
 
     public function getCredentials(Request $request)
     {
-        // todo
+        $authorizationHeader = $request->headers->get('Authorization');
+
+        // skip beyond "Bearer "
+        return substr($authorizationHeader, 7);
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // todo
+        $apiToken = $this->ApiTokenRepo->findOneBy(['token' => $credentials]);
+        
+        if(!$apiToken) {
+            return;
+        }
+
+        return $apiToken->getUser();
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo
+        dd('checking credentials');
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
