@@ -3,7 +3,8 @@
 {% block content_body %}
     <h1>Launch a New Article</h1>
 
-    {{ form_start(articleForm) }}
+        {{ form_start(articleForm,  {'attr': {'novalidate': 'novalidate'}}) }}
+
         {{ form_widget(articleForm) }}
 
         <button type="submit" class="btn btn-primary">Create!</button>
