@@ -30,6 +30,7 @@ class UserFixtures extends BaseFixture
                     $user,
                     'engage'
                 ))
+                ->agreeTerms()
             ;
 
             if($this->faker->boolean) {
@@ -50,6 +51,7 @@ class UserFixtures extends BaseFixture
                 ->setEmail(sprintf('admin%d@thespacebar.com', $i))
                 ->setFirstName($this->faker->firstName)
                 ->setRoles(['ROLE_ADMIN'])
+                ->agreeTerms()
                 ->setPassword($this->passwordEncoder->encodePassword(
                     $user,
                     'engage'
