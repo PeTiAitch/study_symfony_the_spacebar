@@ -10,11 +10,13 @@
 
 {% block body %}
 
-{{ form_start(registrationForm) }}
+{{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+
     {{ form_widget(registrationForm) }}
     <button class="btn btn-lg btn-primary btn-block" type="submit">
         Register
     </button>
+    
 {{ form_end(registrationForm) }}
 
 {# <form class="form-signin" method="post">
