@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Validator\Constraints\Callback;
 
 class EmailToUserTransformer implements DataTransformerInterface
 {
@@ -14,9 +15,16 @@ class EmailToUserTransformer implements DataTransformerInterface
      */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    /**
+     * @var callable
+     */
+    private $finderCallback;
+
+    public function __construct(UserRepository $userRepository, callable $finderCallback )
     {
         $this->userRepository = $userRepository;
+
+        $this->finderCallback = $finderCallback;
     }
 
     public function transform($value)
@@ -38,7 +46,8 @@ class EmailToUserTransformer implements DataTransformerInterface
             return;
         }
 
-        $user = $this->userRepository->findOneBy(['email' => $value]);
+        $callback = $this->finderCallback;
+        $user = $callback($this->userRepository, $value);
 
         if (!$user) {
             throw new TransformationFailedException(sprintf('No user found with email %s', $value));
