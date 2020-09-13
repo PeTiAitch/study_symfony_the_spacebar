@@ -258,10 +258,10 @@ class User implements UserInterface
         return $this;
     }
 
-    // public function __toString()
-    // {
-    //     return $this->getFirstName();
-    // }
+    public function __toString()
+    {
+        return $this->getFirstName();
+    }
 
     public function getAgreedTermsAt(): ?\DateTimeInterface
     {
