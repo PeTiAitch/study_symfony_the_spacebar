@@ -22,13 +22,26 @@ class UserRepository extends ServiceEntityRepository
     /**
      * @return User[]
      */
+    public function findAllMatching(string $query, int $limit = 5)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+     * @return User[]
+     */
     public function findAllEmailAlphabetical()
     {
         return $this->createQueryBuilder('u')
-                    ->orderBy('u.email', 'ASC')
-                    ->getQuery()
-                    ->execute()
-                ;
+            ->orderBy('u.email', 'ASC')
+            ->getQuery()
+            ->execute();
     }
 
     // /**
