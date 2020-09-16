@@ -63,8 +63,6 @@ class UserSelectTextType extends AbstractType
 
         $attr['data-autocomplete-url'] = $this->router->generate('admin_utility_users');
         $view->vars['attr'] = $attr;
-
-        dd($view->vars);
     }
 
 }
