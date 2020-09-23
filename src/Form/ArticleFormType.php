@@ -35,7 +35,6 @@ class ArticleFormType extends AbstractType
          */
         $article = $options['data'] ?? null;
         $isEdit = $article && $article->getId();
-        $location = $article ? $article->getLocation() : null;
 
         $builder
             ->add('title', TextType::class, [
@@ -58,19 +57,28 @@ class ArticleFormType extends AbstractType
             ])
             ;
 
-        if ($location) {
-            $builder->add('specificLocationName', ChoiceType::class, [
-                'choices' => $this->getLocationNameChoices($location),
-                'required' => false,
-                'placeholder' => 'Where exactly?'
-            ]);
-        }
-
         if ($options['include_published_at']) {
             $builder->add('publishedAt', null, [
                 'widget' => 'single_text'
             ]);
         }
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function(FormEvent $event) {
+                /** @var Article|null $data */
+                $data = $event->getData();
+
+                if(!$data) {
+                    return;
+                }
+
+                $this->setupSpecificLocationNameField(
+                    $event->getForm(), 
+                    $data->getLocation()
+                );
+            }
+        );
 
         $builder->get('location')->addEventListener(
             FormEvents::POST_SUBMIT,
