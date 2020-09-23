@@ -137,7 +137,7 @@ class ArticleFormType extends AbstractType
 
     private function setupSpecificLocationNameField(FormInterface $form, ?string $location)
     {
-        if (null === $location) {
+        if (null === $location || '' === $location) {
             $form->remove('specificLocationName');
 
             return;

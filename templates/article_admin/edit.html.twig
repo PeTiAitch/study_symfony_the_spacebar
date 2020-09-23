@@ -6,3 +6,8 @@
         'button_text': 'Update!'
     }) }}
 {% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('js/admin_article_form.js') }}"></script>
+{% endblock %}
