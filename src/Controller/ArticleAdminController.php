@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArticleAdminController extends AbstractController
+class ArticleAdminController extends BaseController
 {
     /**
      * @IsGranted("ROLE_ADMIN_ARTICLE")
@@ -81,10 +81,17 @@ class ArticleAdminController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
+     * 
      * @Route("/admin/article/location-select", name="admin_article_location_select")
      */
     public function getSpecificLocationSelect(Request $request)
     {
+        if (!$this->isGranted('ROLE_ADMIN_ARTICLE') && $this->getUser()->getArticles()->isEmpty()) {
+            throw $this->createAccessDeniedException();
+        }
+
+
         $article = new Article();
         $article->setLocation($request->query->get('location'));
 
